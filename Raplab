@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rap Lab — Passe au niveau supérieur</title>
+  <meta name="description" content="Rap Lab : une plateforme de formation rap pour progresser en écriture, flow, topline et enregistrement.">
+  <style>
+    :root {
+      --bg: #090912;
+      --panel: #131323;
+      --panel2: #1b1a30;
+      --purple: #8b5cf6;
+      --pink: #d946ef;
+      --text: #f6f4ff;
+      --muted: #aaa7c2;
+      --border: rgba(255,255,255,.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; }
+
+    .container { width: min(1120px, 92%); margin: auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(9,9,18,.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .logo { font-size: 1.4rem; font-weight: 900; letter-spacing: -1px; }
+    .logo span { color: var(--pink); }
+
+    .nav-links { display: flex; align-items: center; gap: 22px; }
+    .nav-links a:not(.btn) { color: var(--muted); }
+    .nav-links a:hover { color: white; }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.12); }
+
+    .primary {
+      color: white;
+      background: linear-gradient(110deg, var(--purple), var(--pink));
+      box-shadow: 0 8px 28px #8b5cf633;
+    }
+
+    .secondary {
+      color: white;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+    }
+
+    .hero {
+      padding: 100px 0 85px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 20%, #7c3aed25, transparent 45%),
+        radial-gradient(ellipse at 20% 80%, #d946ef15, transparent 40%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .eyebrow {
+      color: #d8b4fe;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #c4b5fd, #f0abfc);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero p, .section-intro {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 640px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+    .hero-card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(145deg, #1e1b36, #11111e);
+      box-shadow: 0 30px 100px #0005;
+      transform: rotate(1deg);
+    }
+
+    .hero-card h3 { font-size: 1.3rem; margin: 12px 0; }
+    .hero-card p { font-size: .95rem; }
+    .hero-icon { font-size: 3rem; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 25px; }
+    .stat { background: #ffffff08; border: 1px solid var(--border); border-radius: 13px; padding: 13px; }
+    .stat strong { display: block; font-size: 1.2rem; }
+    .stat span { font-size: .75rem; color: var(--muted); }
+
+    section { padding: 82px 0; }
+    .section-heading { margin-bottom: 32px; }
+    .section-heading h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -1px; margin-bottom: 10px; }
+    .section-heading p { color: var(--muted); max-width: 650px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      transition: .2s;
+    }
+
+    .card:hover { transform: translateY(-4px); border-color: #8b5cf688; }
+    .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .card h3 { margin-bottom: 9px; font-size: 1.12rem; }
+    .card p { color: var(--muted); font-size: .94rem; }
+    .card-link { display: inline-block; margin-top: 18px; color: #d8b4fe; font-weight: 800; }
+
+    .premium-banner {
+      margin-top: 28px;
+      padding: 26px;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #6d28d9, #a21caf);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .premium-banner p { color: #f3e8ff; }
+
+    .pricing-wrap { max-width: 780px; margin: auto; text-align: center; }
+
+    .pricing-card {
+      margin-top: 30px;
+      padding: 36px;
+      border-radius: 24px;
+      border: 1px solid #a78bfa66;
+      background:
+        radial-gradient(circle at top right, #8b5cf625, transparent 40%),
+        var(--panel);
+      text-align: left;
+    }
+
+    .price { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; }
+    .price small { font-size: 1rem; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+    .features { list-style: none; margin: 24px 0; }
+    .features li { margin: 12px 0; color: #e8e4f7; }
+    .features li::before { content: "✓"; color: #c4b5fd; font-weight: 900; margin-right: 10px; }
+    .pricing-card .btn { width: 100%; }
+    .fine-print { color: var(--muted); font-size: .82rem; margin-top: 13px; }
+
+    .faq { max-width: 800px; margin: auto; }
+    details { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    summary { cursor: pointer; font-weight: 800; }
+    details p { color: var(--muted); padding-top: 12px; }
+
+    footer { border-top: 1px solid var(--border); padding: 30px 0; color: var(--muted); }
+    .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .page-hero { padding: 65px 0 30px; }
+    .module-detail { margin-bottom: 20px; }
+    .module-detail p { margin-top: 10px; }
+    .tag {
+      display: inline-block;
+      border: 1px solid #a78bfa66;
+      color: #d8b4fe;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: .76rem;
+      margin-bottom: 12px;
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: #000b;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(440px, 100%);
+      background: #151426;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      position: relative;
+    }
+
+    .modal h2 { margin-bottom: 8px; }
+    .modal p { color: var(--muted); margin-bottom: 18px; }
+    .modal input {
+      width: 100%;
+      background: #0b0b16;
+      border: 1px solid var(--border);
+      color: white;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .modal .btn { width: 100%; }
+    .close-modal {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: transparent;
+      color: white;
+      border: 0;
+      font-size: 1.5rem;
+    }
+
+    .notice { font-size: .83rem; color: #d8b4fe; margin-top: 14px; }
+
+    @media (max-width: 760px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero { padding: 65px 0; }
+      .hero-card { transform: none; }
+      .cards { grid-template-columns: 1fr; }
+      .nav-links { gap: 10px; }
+      .nav-links a:not(.btn) { display: none; }
+      .premium-banner { align-items: flex-start; flex-direction: column; }
+      .pricing-card { padding: 25px; }
+      h1 { letter-spacing: -2px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo" onclick="showPage('home'); return false;">RAP<span>LAB</span></a>
+    <nav class="nav-links">
+      <a href="#formations" onclick="showPage('home','formations'); return false;">Formations</a>
+      <a href="#abonnement" onclick="showPage('home','abonnement'); return false;">Premium</a>
+      <button class="btn secondary" onclick="openModal('loginModal')">Connexion</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- PAGE ACCUEIL -->
+  <div id="homePage" class="page active">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Le laboratoire du rap</div>
+          <h1>Travaille ton rap.<br><span class="gradient-text">Trouve ta signature.</span></h1>
+          <p>
+            Écriture, flow, topline, enregistrement et identité artistique :
+            développe tes compétences avec un programme structuré et pratique.
+          </p>
+          <div class="hero-actions">
+            <button class="btn primary" onclick="showPage('program')">Découvrir le programme →</button>
+
+            <!-- BOUTON INTÉGRÉ : RENVOIE VERS PREMIUM -->
+            <button class="btn secondary" type="button"
+              onclick="showPage('home','abonnement')">
+              Rejoindre Rap Lab →
+            </button>
+          </div>
+          <div class="stat-row">
+            <div class="stat"><strong>6</strong><span>modules pratiques</span></div>
+            <div class="stat"><strong>10 €</strong><span>par mois</span></div>
+            <div class="stat"><strong>100 %</strong><span>orienté pratique</span></div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-icon">🎙️</div>
+          <div class="tag">TON ESPACE DE PROGRESSION</div>
+          <h3>Construis ton propre univers.</h3>
+          <p>
+            Apprends à mieux écrire, poser sur une instru, travailler tes mélodies
+            et préparer des morceaux plus aboutis.
+          </p>
+          <div style="margin-top:22px;border-top:1px solid var(--border);padding-top:18px;">
+            <p>✍️ Écriture et rimes</p>
+            <p>🎚️ Flow et placement</p>
+            <p>🎧 Enregistrement et identité sonore</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="formations">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Le programme</div>
+          <h2>Les compétences à développer</h2>
+          <p>Un parcours organisé pour travailler chaque étape de la création d'un morceau.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card premium-link" onclick="showPage('program')" role="link" tabindex="0" onkeydown="if(event.key==='Enter')showPage('program')">
+            <div class="card-icon">✍️</div>
+            <h3>Écriture et rimes</h3>
+            <p>Construis des couplets plus cohérents, travaille les multisyllabiques et améliore tes punchlines.</p>
+            <a class="card-link" href="#" onclick="showPage('program');return false;">Voir le module →</a>
+          </article>
+
+          <article class="card premium-link" onclick="showPage('program')" role="link" tabindex="0" onkeydown="if(event.key==='Enter')showPage('program')">
+            <div class="card-icon">🎤</div>
+            <h3>Flow et placement</h3>
+            <p>Travaille le rythme, les respirations, les variations et la précision sur une instrumentale.</p>
+            <a class="card-link" href="#" onclick="showPage('program');return false;">Voir le module →</a>
+          </article>
+
+          <article class="card premium-link" onclick="showPage('program')" role="link" tabindex="0" onkeydown="if(event.key==='Enter')showPage('program')">
+            <div class="card-icon">🎼</div>
+            <h3>Topline et mélodies</h3>
+            <p>Développe des refrains mémorables et cherche des mélodies qui correspondent à ta voix.</p>
+            <a class="card-link" href="#" onclick="showPage('program');return false;">Voir le module →</a>
+          </article>
+
+          <article class="card premium-link" onclick="showPage('program')" role="link" tabindex="0" onkeydown="if(event.key==='Enter')showPage('program')">
+            <div class="card-icon">🎚️</div>
+            <h3>Enregistrement</h3>
+            <p>Prépare tes prises, organise tes pistes et adopte une méthode de travail plus propre.</p>
+            <a class="card-link" href="#" onclick="showPage('program');return false;">Voir le module →</a>
+          </article>
+
+          <article class="card premium-link" onclick="showPage('program')" role="link" tabindex="0" onkeydown="if(event.key==='Enter')showPage('program')">
+            <div class="card-icon">🧪</div>
+            <h3>Identité artistique</h3>
+            <p>Explore tes influences, tes thèmes et les choix qui peuvent rendre ton univers reconnaissable.</p>
+            <a class="card-link" href="#" onclick="showPage('program');return false;">Voir le module →</a>
+          </article>
+
+          <article class="card premium-link" onclick="showPage('program')" role="link" tabindex="0" onkeydown="if(event.key==='Enter')showPage('program')">
+            <div class="card-icon">🚀</div>
+            <h3>Préparer une sortie</h3>
+            <p>Structure ton projet, prépare tes visuels et organise une stratégie de publication réaliste.</p>
+            <a class="card-link" href="#" onclick="showPage('program');return false;">Voir le module →</a>
+          </article>
+        </div>
+
+        <div class="premium-banner">
+          <div>
+            <h3>Tout le programme dans Premium</h3>
+            <p>Accède aux contenus réservés aux membres avec un abonnement mensuel.</p>
+          </div>
+          <button class="btn secondary" onclick="showPage('home','abonnement')">
+            Découvrir Premium →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="abonnement">
+      <div class="container pricing-wrap">
+        <div class="eyebrow">Accès Premium</div>
+        <div class="section-heading">
+          <h2>Ton espace pour progresser</h2>
+          <p>Un abonnement simple pour accéder au programme Rap Lab.</p>
+        </div>
+
+        <div class="pricing-card">
+          <div class="tag">RAP LAB PREMIUM</div>
+          <h3>Abonnement mensuel</h3>
+          <div class="price">10 € <small>/ mois</small></div>
+          <p style="color:var(--muted);margin-top:5px;">Sans engagement présenté ici comme une offre mensuelle — les conditions réelles doivent être configurées avant la mise en vente.</p>
+
+          <ul class="features">
+            <li>Accès aux 6 modules de formation</li>
+            <li>Exercices d'écriture et de flow</li>
+            <li>Méthodes de travail pour tes morceaux</li>
+            <li>Conseils pour développer ton identité artistique</li>
+            <li>Contenus Premium regroupés au même endroit</li>
+          </ul>
+
+          <button class="btn primary" onclick="openModal('subscribeModal')">
+            Rejoindre Rap Lab — 10 €/mois →
+          </button>
+          <p class="fine-print">Le paiement n'est pas encore activé sur cette version du site.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container faq">
+        <div class="section-heading">
+          <div class="eyebrow">FAQ</div>
+          <h2>Questions fréquentes</h2>
+        </div>
+        <details>
+          <summary>À qui s'adresse Rap Lab ?</summary>
+          <p>Aux artistes débutants ou en progression qui veulent travailler leur écriture, leur flow et leur méthode de création.</p>
+        </details>
+        <details>
+          <summary>Les formations sont-elles gratuites ?</summary>
+          <p>Le programme est prévu comme une offre Premium payante. Aucun cours gratuit n'est proposé dans cette maquette.</p>
+        </details>
+        <details>
+          <summary>Comment fonctionne l'abonnement ?</summary>
+          <p>L'offre prévue est de 10 € par mois. Le système de paiement et les conditions d'abonnement doivent être connectés avant d'encaisser des paiements.</p>
+        </details>
+        <details>
+          <summary>Comment accéder aux cours Premium ?</summary>
+          <p>Dans cette maquette, les boutons affichent les pages de présentation. Un système de comptes et de vérification d'abonnement devra être ajouté pour réserver réellement les cours aux membres.</p>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGE PROGRAMME -->
+  <div id="programPage" class="page">
+    <section class="page-hero">
+      <div class="container">
+        <div class="eyebrow">Le parcours Rap Lab</div>
+        <h1>Le programme <span class="gradient-text">Premium</span></h1>
+        <p class="section-intro">Six modules pour structurer ta progression artistique. Les cours complets seront disponibles dans l'espace membre une fois celui-ci mis en place.</p>
+        <div class="hero-actions">
+          <button class="btn primary" onclick="showPage('home','abonnement')">Accéder à Premium — 10 €/mois</button>
+          <button class="btn secondary" onclick="showPage('home')">← Retour à l'accueil</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:25px;">
+      <div class="container">
+        <article class="card module-detail">
+          <div class="tag">MODULE 01</div>
+          <h2>Écriture et rimes</h2>
+          <p>Apprends à développer une idée, construire un couplet, varier les rimes, travailler les images et améliorer la cohérence de tes textes.</p>
+          <p><strong>Objectif :</strong> terminer un couplet structuré avec une idée centrale claire.</p>
+          <button class="btn secondary" style="margin-top:18px;" onclick="showPage('home','abonnement')">Débloquer avec Premium →</button>
+        </article>
+
+        <article class="card module-detail">
+          <div class="tag">MODULE 02</div>
+          <h2>Flow et placement</h2>
+          <p>Travaille le tempo, les accents, les respirations, les changements de débit et la façon dont ta voix se pose sur l'instrumentale.</p>
+          <p><strong>Objectif :</strong> enregistrer plusieurs interprétations d'un même passage.</p>
+          <button class="btn secondary" style="margin-top:18px;" onclick="showPage('home','abonnement')">Débloquer avec Premium →</button>
+        </article>
+
+        <article class="card module-detail">
+          <div class="tag">MODULE 03</div>
+          <h2>Topline et refrains</h2>
+          <p>Explore les mélodies, les répétitions, les variations et les contrastes entre couplet et refrain pour rendre un morceau mémorable.</p>
+          <p><strong>Objectif :</strong> préparer plusieurs idées de refrains sur une même production.</p>
+          <button class="btn secondary" style="margin-top:18px;" onclick="showPage('home','abonnement')">Débloquer avec Premium →</button>
+        </article>
+
+        <article class="card module-detail">
+          <div class="tag">MODULE 04</div>
+          <h2>Enregistrement et prises de voix</h2>
+          <p>Organise ta session, prépare ton micro, gère les prises et apprends à écouter tes enregistrements avec méthode.</p>
+          <p><strong>Objectif :</strong> réaliser une session propre et organisée.</p>
+          <button class="btn secondary" style="margin-top:18px;" onclick="showPage('home','abonnement')">Débloquer avec Premium →</button>
+        </article>
+
+        <article class="card module-detail">
+          <div class="tag">MODULE 05</div>
+          <h2>Identité artistique</h2>
+          <p>Clarifie tes thèmes, tes influences, tes choix d'interprétation et les éléments qui peuvent rendre ton univers distinctif.</p>
+          <p><strong>Objectif :</strong> définir les bases de ta direction artistique.</p>
+          <button class="btn secondary" style="margin-top:18px;" onclick="showPage('home','abonnement')">Débloquer avec Premium →</button>
+        </article>
+
+        <article class="card module-detail">
+          <div class="tag">MODULE 06</div>
+          <h2>Préparer la sortie d'un morceau</h2>
+          <p>Planifie les étapes de ton projet, réfléchis aux visuels, prépare les publications et organise une sortie adaptée à tes moyens.</p>
+          <p><strong>Objectif :</strong> établir un calendrier simple pour ton prochain titre.</p>
+          <button class="btn secondary" style="margin-top:18px;" onclick="showPage('home','abonnement')">Débloquer avec Premium →</button>
+        </article>
+
+        <div class="premium-banner">
+          <div>
+            <h3>Prêt à rejoindre Rap Lab ?</h3>
+            <p>Retrouve l'offre d'abonnement sur la page d'accueil.</p>
+          </div>
+          <button class="btn secondary" onclick="showPage('home','abonnement')">Voir Premium →</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div><a href="#" class="logo" onclick="showPage('home');return false;">RAP<span>LAB</span></a><p>Travaille ton rap. Trouve ta signature.</p></div>
+    <p>© <span id="year"></span> Rap Lab. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<!-- MODALE CONNEXION -->
+<div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" onclick="backdropClose(event,'loginModal')">
+  <div class="modal">
+    <button class="close-modal" aria-label="Fermer" onclick="closeModal('loginModal')">×</button>
+    <h2 id="loginTitle">Connexion membre</h2>
+    <p>Connecte-toi à ton espace Rap Lab.</p>
+    <form onsubmit="demoLogin(event)">
+      <input type="email" placeholder="Adresse e-mail" required autocomplete="email">
+      <input type="password" placeholder="Mot de passe" required autocomplete="current-password">
+      <button class="btn primary" type="submit">Se connecter</button>
+    </form>
+    <div class="notice" id="loginNotice">La connexion réelle nécessite un serveur de comptes.</div>
+  </div>
+</div>
+
+<!-- MODALE ABONNEMENT -->
+<div class="modal-backdrop" id="subscribeModal" role="dialog" aria-modal="true" aria-labelledby="subscribeTitle" onclick="backdropClose(event,'subscribeModal')">
+  <div class="modal">
+    <button class="close-modal" aria-label="Fermer" onclick="closeModal('subscribeModal')">×</button>
+    <h2 id="subscribeTitle">Rap Lab Premium</h2>
+    <p>Abonnement prévu : <strong>10 € par mois</strong>.</p>
+    <p>Le paiement en ligne n'est pas encore connecté. Aucun paiement ne sera effectué depuis cette démonstration.</p>
+    <button class="btn primary" onclick="closeModal('subscribeModal');showPage('home','abonnement')">Retour à l'offre</button>
+    <div class="notice">Pour accepter les paiements, il faudra relier un prestataire comme Stripe et mettre en place la gestion des membres.</div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function showPage(page, target) {
+    const home = document.getElementById("homePage");
+    const program = document.getElementById("programPage");
+
+    home.classList.toggle("active", page === "home");
+    program.classList.toggle("active", page === "program");
+
+    closeModal("loginModal");
+    closeModal("subscribeModal");
+
+    if (target && page === "home") {
+      setTimeout(() => {
+        const element = document.getElementById(target);
+        if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 40);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function openModal(id) {
+    document.getElementById(id).classList.add("open");
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove("open");
+  }
+
+  function backdropClose(event, id) {
+    if (event.target.id === id) closeModal(id);
+  }
+
+  function demoLogin(event) {
+    event.preventDefault();
+    document.getElementById("loginNotice").textContent =
+      "La connexion n'est pas encore activée : aucun compte n'a été créé ni vérifié.";
+  }
+
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+      closeModal("loginModal");
+      closeModal("subscribeModal");
+    }
+  });
+</script>
+
+</body>
+</html>
